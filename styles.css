@@ -191,6 +191,9 @@ kbd {
 }
 .site-nav a:not(.btn):hover, .site-nav a.is-current { color: var(--text); background: rgb(0 30 43 / 0.05); }
 .site-nav__cta { margin-left: 12px; }
+.site-nav a.site-nav__github { display: inline-flex; align-items: center; gap: 10px; padding: 8px; }
+.site-nav__github svg { width: 22px; height: 22px; fill: currentColor; }
+.site-nav__github-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .nav-toggle {
   display: none;
@@ -516,6 +519,9 @@ main { padding-bottom: clamp(48px, 6vw, 96px); }
 .site-footer { padding: 72px 0 32px; background: #001520; color: #c1c7c6; font-size: 0.9375rem; }
 .site-footer__inner { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 40px; }
 .site-footer__brand p { max-width: 280px; margin: 16px 0 0; }
+.site-footer__github { display: inline-flex; margin-top: 20px; color: #c1c7c6; }
+.site-footer__github:hover { color: var(--green); }
+.site-footer__github svg { width: 26px; height: 26px; fill: currentColor; }
 .site-footer__col { display: flex; flex-direction: column; gap: 14px; }
 .site-footer__col h2 { margin: 0 0 6px; color: var(--white); font-size: 1rem; font-weight: 600; }
 .site-footer__col a { text-decoration: none; }
@@ -580,6 +586,8 @@ main { padding-bottom: clamp(48px, 6vw, 96px); }
   }
   .site-nav.is-open { display: flex; }
   .site-nav a:not(.btn) { padding: 12px; }
+  .site-nav a.site-nav__github { padding: 12px; }
+  .site-nav__github-label { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
   .site-nav__cta { margin: 8px 0 0; }
 
   .hero__inner, .highlight, .feature, .feature--flip, .cta__inner { grid-template-columns: 1fr; }
