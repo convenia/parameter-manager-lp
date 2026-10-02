@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parameter Manager — Desktop GUI for AWS Parameter Store</title>
+  <meta name="description" content="Parameter Manager is a desktop client for AWS Systems Manager Parameter Store. Browse parameters, edit values as .env text, review a diff before every save, browse version history, and compare parameters across accounts.">
+  <meta name="theme-color" content="#001e2b">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="announce">
+    <div class="container announce__inner">
+      <span class="pill">New</span>
+      <p class="announce__text">Compare two parameters side by side, even across AWS accounts.</p>
+      <a class="announce__link" href="#compare">See how <span aria-hidden="true">&gt;</span></a>
+    </div>
+  </div>
+
+  <header class="site-header" data-header>
+    <div class="container site-header__inner">
+      <a class="brand" href="#top" aria-label="Parameter Manager home">
+        <svg class="brand__mark" viewBox="0 0 512 512" aria-hidden="true">
+          <rect x="32" y="32" width="448" height="448" rx="112" fill="#00684a"/>
+          <g transform="translate(130 130) scale(10.5)" fill="none" stroke="#00ed64" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 19a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M10.9 12.1 20 3"/><path d="m17 6 2 2"/><path d="m15 8 2 2"/>
+          </g>
+        </svg>
+        <span class="brand__name">Parameter Manager</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+        <span class="sr-only">Menu</span>
+        <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" data-nav>
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#safety">Safety</a>
+        <a href="#get-started">Get started</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn btn--primary site-nav__cta" href="#download">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <p class="overline overline--dark">Desktop tool · AWS Systems Manager</p>
+          <h1 class="display hero__title">Parameter Manager: the desktop GUI for AWS Parameter Store.</h1>
+          <p class="hero__lede">Browse every parameter, edit values as <code>.env</code> text, and review a key-by-key diff before anything is written. A fast, careful client for the configuration your apps depend on.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary btn--lg" href="#download">Download for Linux</a>
+            <a class="link-arrow link-arrow--light" href="#get-started">Try demo mode <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+          </div>
+          <p class="hero__meta">v0.1.0 · AppImage and .deb · Works with your existing AWS profiles, SSO included</p>
+        </div>
+
+        <div class="hero__art" aria-hidden="true">
+          <span class="blob blob--a"></span>
+          <span class="blob blob--b"></span>
+          <svg class="hero__chevron" viewBox="0 0 120 140"><path d="M8 8 112 70 8 132V98l56-28L8 42z"/></svg>
+          <div class="window window--hero">
+            <div class="window__bar"><i></i><i></i><i></i></div>
+            <img src="assets/dark-editor.webp" width="1440" height="878" alt="">
+          </div>
+          <div class="float-chip float-chip--one"><span class="chip chip--added">+1 added</span><span class="chip chip--changed">~1 changed</span></div>
+          <div class="float-chip float-chip--two"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> Saved version 4</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Highlight -->
+    <section class="section section--tight" id="overview">
+      <div class="container">
+        <div class="highlight reveal">
+          <div class="highlight__copy">
+            <h2 class="h2">A diff before every save</h2>
+            <p>Saving is the riskiest thing you do in Parameter Store, so Parameter Manager never writes blind. Every save lists added, changed and removed keys with values masked, checks that nobody saved in between, and keeps the parameter's type, KMS key and description exactly as AWS stores them.</p>
+            <a class="btn btn--primary" href="#safety">How saving works</a>
+          </div>
+          <div class="highlight__art">
+            <img class="shot shot--card" src="assets/dark-diff-modal.webp" width="876" height="320" alt="The save dialog for /myapp/prod/env: one key added, one changed, values masked, and a Save new version button." loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="overline">Features</p>
+            <h2 class="h2">Built for the way you work with parameters</h2>
+          </div>
+          <div class="theme-switch" role="group" aria-label="Screenshot theme">
+            <span class="theme-switch__label">Screenshots</span>
+            <button type="button" class="is-active" aria-pressed="true" data-shot-theme="light">Light</button>
+            <button type="button" aria-pressed="false" data-shot-theme="dark">Dark</button>
+          </div>
+        </div>
+
+        <hr class="rule">
+
+        <article class="feature reveal">
+          <div class="feature__copy">
+            <h3 class="h3">See every parameter at a glance</h3>
+            <p>The list has the same columns as the AWS console: name, tier, type, data type, version, last modified, last modified user and description. Search by name or description, sort any column, and move through your paths with a folder tree built from the names.</p>
+            <ul class="ticks">
+              <li>Search and sort always cover every row</li>
+              <li>Thousands of parameters stay fast</li>
+            </ul>
+          </div>
+          <figure class="feature__media">
+            <button class="window" type="button" data-zoom>
+              <span class="window__bar"><i></i><i></i><i></i></span>
+              <img data-shot="parameters" src="assets/light-parameters.webp" width="1440" height="878" alt="The parameter list with name, tier, type, version and last modified columns, next to a path tree." loading="lazy">
+            </button>
+          </figure>
+        </article>
+
+        <article class="feature feature--flip reveal">
+          <div class="feature__copy">
+            <h3 class="h3">Edit values as <code>.env</code> text</h3>
+            <p>Values open in a CodeMirror editor with syntax highlighting, warnings for invalid lines and duplicate keys, and a byte counter against the tier limit. JSON and plain strings open as plain text. Press <kbd>Ctrl</kbd>+<kbd>S</kbd> to review and save.</p>
+            <ul class="ticks">
+              <li>SecureStrings stay hidden until you decrypt them</li>
+              <li>Search inside the value with <kbd>Ctrl</kbd>+<kbd>F</kbd></li>
+            </ul>
+          </div>
+          <figure class="feature__media">
+            <button class="window" type="button" data-zoom>
+              <span class="window__bar"><i></i><i></i><i></i></span>
+              <img data-shot="editor" src="assets/light-editor.webp" width="1440" height="878" alt="A SecureString parameter open in the .env editor, with its overview panel above." loading="lazy">
+            </button>
+          </figure>
+        </article>
+
+        <article class="feature reveal">
+          <div class="feature__copy">
+            <h3 class="h3">Version history with one-click restore</h3>
+            <p>Browse every version, newest first, and see exactly which keys changed compared with the current value. <strong>Restore this version</strong> puts the old value back in the editor as unsaved changes; saving it creates a new version, so history is never rewritten.</p>
+          </div>
+          <figure class="feature__media">
+            <button class="window" type="button" data-zoom>
+              <span class="window__bar"><i></i><i></i><i></i></span>
+              <img data-shot="history" src="assets/light-history.webp" width="1440" height="878" alt="The History tab listing three versions, with the changed key between version 2 and the current one." loading="lazy">
+            </button>
+          </figure>
+        </article>
+
+        <article class="feature feature--flip reveal" id="compare">
+          <div class="feature__copy">
+            <h3 class="h3">Compare across environments and accounts</h3>
+            <p>Pick a connection and a parameter for each side, such as staging against production or one AWS account against another. See how many keys differ, exist on one side only, or are equal, then read the key-by-key table. Values stay masked until you reveal them.</p>
+          </div>
+          <figure class="feature__media">
+            <button class="window" type="button" data-zoom>
+              <span class="window__bar"><i></i><i></i><i></i></span>
+              <img data-shot="compare" src="assets/light-compare.webp" width="1440" height="878" alt="Comparing /myapp/prod/env with /myapp/staging/env: 6 different, 1 only in A, 1 only in B, 6 equal." loading="lazy">
+            </button>
+          </figure>
+        </article>
+
+        <article class="feature reveal">
+          <div class="feature__copy">
+            <h3 class="h3">Connections that know what's production</h3>
+            <p>A connection is an AWS profile plus a region, an optional path prefix and a color. Mark a connection <strong>read-only</strong> and every write action disappears. The main process refuses writes on it too, so a UI bug can't change production.</p>
+            <ul class="ticks">
+              <li>Profiles come from your AWS config and credentials files</li>
+              <li><strong>Test connection</strong> before you save it</li>
+            </ul>
+          </div>
+          <figure class="feature__media">
+            <button class="window" type="button" data-zoom>
+              <span class="window__bar"><i></i><i></i><i></i></span>
+              <img data-shot="connections" src="assets/light-connections.webp" width="1440" height="878" alt="The connection form with name, AWS profile, region, path prefix, color and a Read-only option." loading="lazy">
+            </button>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <!-- Safety -->
+    <section class="section section--soft" id="safety">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="overline">Safety</p>
+            <h2 class="h2">Careful by design</h2>
+            <p class="section-head__lede">Every save goes through the same checks, in the same order, before anything reaches AWS.</p>
+          </div>
+        </div>
+
+        <ol class="cards">
+          <li class="card reveal">
+            <span class="card__step">01</span>
+            <h3 class="h4">Guards first</h3>
+            <p>Empty values, SecureStrings that were never decrypted, unchanged values and anything over 8,192 bytes are stopped before a dialog opens or AWS is called.</p>
+          </li>
+          <li class="card reveal">
+            <span class="card__step">02</span>
+            <h3 class="h4">Review the diff</h3>
+            <p>Added, changed and removed keys, values masked. Going over 4 KB on a Standard parameter means ticking the Advanced tier upgrade yourself.</p>
+          </li>
+          <li class="card reveal">
+            <span class="card__step">03</span>
+            <h3 class="h4">Check the version</h3>
+            <p>The parameter is read again before writing. If someone saved in between, you choose: reload the latest, or overwrite anyway.</p>
+          </li>
+          <li class="card reveal">
+            <span class="card__step">04</span>
+            <h3 class="h4">Keep the metadata</h3>
+            <p>Type, KMS key, description, allowed pattern and data type come from what AWS holds, never from a stale list. Only the value changes.</p>
+          </li>
+        </ol>
+
+        <div class="trust">
+          <div class="trust__item reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            <div>
+              <h3 class="h4">Credentials stay in your AWS files</h3>
+              <p>The app stores only connection names, profiles, regions and display settings, written atomically with file mode <code>0600</code>.</p>
+            </div>
+          </div>
+          <div class="trust__item reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+            <div>
+              <h3 class="h4">A hardened Electron app</h3>
+              <p>Only the main process talks to AWS. The UI is sandboxed with context isolation, no Node integration and a strict Content Security Policy.</p>
+            </div>
+          </div>
+          <div class="trust__item reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><path d="M3 3l18 18"/></svg>
+            <div>
+              <h3 class="h4">Values are never logged</h3>
+              <p>Logs hold only the error code, parameter name and message. Deleting a parameter requires typing its full name.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Get started -->
+    <section class="learn" id="get-started">
+      <div class="container">
+        <h2 class="h2 h2--light">Get started in minutes</h2>
+        <p class="learn__lede">Parameter Manager uses the AWS profiles already on your machine. No extra keys, no account to create.</p>
+
+        <div class="learn__grid">
+          <div class="learn__item reveal">
+            <svg class="learn__icon" viewBox="0 0 64 64" aria-hidden="true">
+              <rect x="6" y="10" width="44" height="34" rx="2" class="i-line"/><rect x="6" y="10" width="44" height="7" class="i-fill"/>
+              <path d="M40 34v20m-8-8 8 8 8-8" class="i-accent"/>
+            </svg>
+            <h3 class="h4">1. Install it</h3>
+            <p>Download the AppImage or the <code>.deb</code> package for Linux. You need AWS profiles in <code>~/.aws/config</code> or <code>~/.aws/credentials</code>; static keys and SSO both work.</p>
+            <a class="link-arrow link-arrow--light" href="#download">Download <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+          </div>
+          <div class="learn__item reveal">
+            <svg class="learn__icon" viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="32" cy="32" r="24" class="i-line"/>
+              <path d="M24 30h16M24 30v-6m16 6v-6M32 38v10" class="i-accent"/><rect x="22" y="30" width="20" height="8" rx="2" class="i-fill"/>
+            </svg>
+            <h3 class="h4">2. Create a connection</h3>
+            <p>Pick a profile and a region, add an optional path prefix and color, then press <strong>Test connection</strong>. Mark production connections read-only.</p>
+            <a class="link-arrow link-arrow--light" href="#faq-iam" data-open-faq="faq-iam">Required IAM permissions <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+          </div>
+          <div class="learn__item reveal">
+            <svg class="learn__icon" viewBox="0 0 64 64" aria-hidden="true">
+              <rect x="6" y="12" width="52" height="40" rx="2" class="i-line"/><rect x="6" y="12" width="52" height="7" class="i-fill"/>
+              <path d="m16 30 7 6-7 6M28 44h14" class="i-accent"/>
+            </svg>
+            <h3 class="h4">3. Or try it without AWS</h3>
+            <p>Run from source in demo mode, with 19 fake parameters and nothing sent to AWS. Requires Node.js 20.19 or newer.</p>
+            <div class="code">
+              <code>npm install &amp;&amp; npm run demo</code>
+              <button class="code__copy" type="button" data-copy="npm install &amp;&amp; npm run demo">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container container--narrow">
+        <h2 class="display display--section">Frequently asked questions</h2>
+
+        <div class="faq" data-faq>
+          <div class="faq__item">
+            <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-what">What is Parameter Manager?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+            <div class="faq__a" id="faq-what" hidden>
+              <p>A desktop client for AWS Systems Manager Parameter Store. It lists parameters with the same columns as the AWS console, edits values as <code>.env</code> text, shows a diff before every save, browses version history and compares two parameters, even across AWS accounts. It is written in plain JavaScript on Electron, CodeMirror 6 and the AWS SDK for JavaScript v3.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-iam">Which IAM permissions does it need?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+            <div class="faq__a" id="faq-iam" hidden>
+              <p>Reading needs <code>ssm:DescribeParameters</code>, <code>ssm:GetParameter</code>, <code>ssm:GetParameterHistory</code> and <code>ssm:ListTagsForResource</code>. Without the last one the app still works and shows tags as “Unavailable”. Writing also needs <code>ssm:PutParameter</code> and <code>ssm:DeleteParameter</code>.</p>
+              <p>SecureStrings with a customer-managed key need <code>kms:Decrypt</code> to read, and <code>kms:Encrypt</code> to write, plus <code>kms:GenerateDataKey</code> for Advanced-tier SecureStrings.</p>
+              <div class="code code--block">
+<pre><code>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ParameterManagerRead",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:DescribeParameters",
+        "ssm:GetParameter",
+        "ssm:GetParameterHistory",
+        "ssm:ListTagsForResource"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ParameterManagerWrite",
+      "Effect": "Allow",
+      "Action": ["ssm:PutParameter", "ssm:DeleteParameter"],
+      "Resource": "*"
+    }
+  ]
+}</code></pre>
+                <button class="code__copy" type="button" data-copy-from="prev">Copy</button>
+              </div>
+              <p class="faq__note">Leave out the write statement for read-only users, and scope <code>Resource</code> to your parameter paths where you can.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-creds">Does it store my AWS credentials?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+            <div class="faq__a" id="faq-creds" hidden>
+              <p>No. Credentials stay in your AWS config and credentials files. Parameter Manager stores only connection names, profile names, regions and display settings, in its own settings folder (<code>~/.config/Parameter Manager</code> on Linux).</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-sso">Does it work with AWS SSO?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+            <div class="faq__a" id="faq-sso" hidden>
+              <p>Yes. SSO profiles are marked “(SSO)” in the profile list. When a session expires, the error shows the exact <code>aws sso login --profile …</code> command to run. Role profiles that need an MFA code (<code>mfa_serial</code>) aren't supported yet; use a profile that is already signed in.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-tier">What happens when a value grows past 4 KB?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+            <div class="faq__a" id="faq-tier" hidden>
+              <p>Standard parameters hold up to 4,096 bytes. When a value is bigger, the save dialog asks you to tick <strong>Upgrade to the Advanced tier (charges apply)</strong>. Advanced parameters hold up to 8,192 bytes and can't be downgraded, so the app never changes the tier without asking.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-os">Which platforms are supported?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+            <div class="faq__a" id="faq-os" hidden>
+              <p>Linux, as an AppImage and a <code>.deb</code> package. Builds aren't code-signed yet, and there is no auto-update.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-limits">What can't it do yet?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+            <div class="faq__a" id="faq-limits" hidden>
+              <p>Parameter policies (expiration and notifications), labels and tags can't be edited yet. Profiles that can read parameters but lack <code>ssm:DescribeParameters</code> can't use the app, because both listing and saving need it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta" id="download">
+      <div class="container cta__inner">
+        <div class="cta__copy">
+          <h2 class="display display--section display--light">Ready to get started?</h2>
+          <p>Download Parameter Manager and connect it to the AWS profiles you already use.</p>
+          <!-- Put the release files from `npm run dist` in ./downloads next to this page. -->
+          <div class="cta__actions">
+            <a class="btn btn--primary btn--lg" href="downloads/Parameter%20Manager-0.1.0.AppImage" download>Download AppImage</a>
+            <a class="link-arrow link-arrow--light" href="downloads/parameter-manager_0.1.0_amd64.deb" download>Download .deb <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+          </div>
+          <p class="cta__meta">Linux x64 · Version 0.1.0</p>
+          <p class="cta__os" data-os-note hidden>Looks like you're not on Linux. Only Linux packages are available for now.</p>
+        </div>
+
+        <div class="cta__card">
+          <p class="overline overline--mono">Download Parameter Manager today:</p>
+          <ul class="checks">
+            <li>An <code>.env</code> editor with warnings</li>
+            <li>A diff before every save</li>
+            <li>Version history and restore</li>
+            <li>Compare across accounts</li>
+            <li>Read-only connections</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <a class="brand brand--light" href="#top">
+          <svg class="brand__mark" viewBox="0 0 512 512" aria-hidden="true">
+            <rect x="32" y="32" width="448" height="448" rx="112" fill="#00684a"/>
+            <g transform="translate(130 130) scale(10.5)" fill="none" stroke="#00ed64" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 19a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M10.9 12.1 20 3"/><path d="m17 6 2 2"/><path d="m15 8 2 2"/>
+            </g>
+          </svg>
+          <span class="brand__name">Parameter Manager</span>
+        </a>
+        <p>A desktop client for AWS Systems Manager Parameter Store.</p>
+      </div>
+      <div class="site-footer__col">
+        <h2>Product</h2>
+        <a href="#features">Features</a>
+        <a href="#compare">Compare</a>
+        <a href="#safety">Safety</a>
+      </div>
+      <div class="site-footer__col">
+        <h2>Get started</h2>
+        <a href="#download">Download</a>
+        <a href="#get-started">Demo mode</a>
+        <a href="#faq-iam" data-open-faq="faq-iam">IAM permissions</a>
+      </div>
+      <div class="site-footer__col">
+        <h2>Help</h2>
+        <a href="#faq">FAQ</a>
+        <a href="#faq-sso" data-open-faq="faq-sso">AWS SSO</a>
+        <a href="#faq-limits" data-open-faq="faq-limits">Limitations</a>
+      </div>
+    </div>
+    <div class="container">
+      <p class="site-footer__legal">© <span data-year>2026</span> Leonardo Lemos. Parameter Manager is not affiliated with or endorsed by Amazon Web Services.</p>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" data-lightbox aria-label="Screenshot">
+    <button class="lightbox__close" type="button" data-lightbox-close aria-label="Close">×</button>
+    <img alt="">
+  </dialog>
+</body>
+</html>
