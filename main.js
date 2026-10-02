@@ -165,8 +165,19 @@ $$('[data-zoom]').forEach((trigger) => {
 $('[data-lightbox-close]').addEventListener('click', () => lightbox.close())
 lightbox.addEventListener('click', (event) => { if (event.target === lightbox) lightbox.close() })
 
-// Only Linux builds exist, so say so to everyone else
+// Put the visitor's platform first; point everyone else at the releases page
 const platform = (navigator.userAgentData?.platform || navigator.platform || navigator.userAgent).toLowerCase()
-if (!/linux|x11/.test(platform) || /android/.test(navigator.userAgent.toLowerCase())) $('[data-os-note]').hidden = false
+const isMobile = /android|iphone|ipad/.test(navigator.userAgent.toLowerCase())
+const os = isMobile ? null : /win/.test(platform) ? 'windows' : /mac/.test(platform) ? 'macos' : /linux|x11/.test(platform) ? 'linux' : null
+const osLabels = { linux: 'Linux', windows: 'Windows', macos: 'macOS' }
+if (os) {
+  const downloads = $('[data-downloads]')
+  downloads.prepend($(`[data-os="${os}"]`, downloads))
+  const heroDownload = $('[data-hero-download]')
+  heroDownload.textContent = `Download for ${osLabels[os]}`
+  heroDownload.prepend($(`[data-os="${os}"] .os-logo`, downloads).cloneNode(true))
+} else {
+  $('[data-os-note]').hidden = false
+}
 
 $$('[data-year]').forEach((el) => { el.textContent = String(new Date().getFullYear()) })
